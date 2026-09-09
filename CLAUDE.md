@@ -66,3 +66,46 @@ Everything else in the repo is prose about that file.
 - Optional values are `null`, never a guess or a placeholder year.
 - Non-obvious choices and anything a future change might undo get an entry in
   `docs/FINDINGS.md`.
+
+## Settled decisions — do not re-litigate
+
+Each of these was a real choice with a cost. Changing one is fine; changing it
+because it looks arbitrary is not.
+
+- **One self-contained `index.html`, no build step.** A bundler would let the
+  code split into modules and cost the thing its defining property: the same file
+  is a local file, a published page, and something you can read straight through.
+- **Single visual world, no light theme.** A washed-out vaporwave is a
+  contradiction. What would have been a light/dark switch is a mood switch
+  between two dark palettes. Every colour is painted explicitly — including
+  `body`'s background — so the page never inherits a host's ground.
+- **The corpus ships in the page; edits live in an overlay.** Changes are rows
+  keyed by entity id, merged over the baseline at build time — adding, editing
+  and deleting are one mechanism, everything is revertable, and the file still
+  works with no store attached. Do not migrate the baseline into the store.
+- **Provenance is permanent.** `src` is `corpus`, `you` or `claude`, and it
+  reaches the ring on the canvas, the changes list, the `src:` query key and the
+  export. A generated fact must never be able to pass as a curated one.
+- **Nothing Claude proposes is written without review.** The suggestion flow
+  validates against the schema and then asks. Validation proves a row *fits*, not
+  that it is *true* — the review list is the only thing standing in for truth.
+- **Edges are one neutral colour; line style carries the relationship family.**
+  Sixteen edge colours would encode nothing but themselves.
+- **The layout switch has no default opinion.** Clusters throws away topology,
+  Timeline throws away everything but the year, Web is an honest hairball. None
+  of them is right enough to be the only one.
+
+## Publishing
+
+The live page is an Artifact:
+**https://claude.ai/code/artifact/07523ea7-c423-4cd3-80b7-6885b139f19f**
+
+Two things to know before republishing:
+
+1. **Pass that URL explicitly.** The artifact was first published from this
+   project's previous home. Publishing `index.html` from this repo *without* the
+   `url` creates a second, separate artifact rather than updating the live one.
+2. **Capabilities must be restated when they change.** The page declares `db`,
+   `downloads` and `sample`. Omitting `capabilities` on a redeploy carries the
+   stored set forward; passing a non-empty object replaces it wholesale, so
+   anything not restated is revoked.
