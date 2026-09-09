@@ -35,8 +35,10 @@ Everything else in the repo is prose about that file.
 | Path | Contents |
 |---|---|
 | `index.html` | The app: corpus, force layout, canvas renderer, query language, editing |
+| `tools/build-artifact.mjs` | Strips the document shell for the Artifact build |
 | `README.md` | What it is and how to use it |
 | `docs/FINDINGS.md` | Engineering log — techniques worth keeping, known limits |
+| `docs/ROADMAP.md` | Where it stands and what is worth doing next |
 
 ## Working on it
 
@@ -72,9 +74,15 @@ Everything else in the repo is prose about that file.
 Each of these was a real choice with a cost. Changing one is fine; changing it
 because it looks arbitrary is not.
 
-- **One self-contained `index.html`, no build step.** A bundler would let the
-  code split into modules and cost the thing its defining property: the same file
-  is a local file, a published page, and something you can read straight through.
+- **One self-contained `index.html`, no bundler.** A bundler would let the code
+  split into modules and cost the thing its defining property: the same file is a
+  local file, a Pages site, and something you can read straight through.
+  `tools/build-artifact.mjs` is not a step towards one — it only removes a
+  document shell, and nothing else may ever be added to it.
+- **`index.html` is a complete HTML document.** It was once written for the
+  Artifact wrapper and carried no doctype, charset or viewport meta, which meant
+  quirks mode and a broken mobile layout anywhere else it was opened. The
+  document shell is the canonical form; the Artifact build is the derived one.
 - **Single visual world, no light theme.** A washed-out vaporwave is a
   contradiction. What would have been a light/dark switch is a mood switch
   between two dark palettes. Every colour is painted explicitly — including
@@ -97,14 +105,20 @@ because it looks arbitrary is not.
 
 ## Publishing
 
-The live page is an Artifact:
-**https://claude.ai/code/artifact/07523ea7-c423-4cd3-80b7-6885b139f19f**
+Two outputs, one source.
+
+**GitHub Pages** — https://joshhambright.github.io/musicmap/ — serves the
+repository root from `main`. Pushing to `main` is the deploy; there is nothing to
+build and no workflow.
+
+**Artifact** — https://claude.ai/code/artifact/07523ea7-c423-4cd3-80b7-6885b139f19f
 
 Two things to know before republishing:
 
-1. **Pass that URL explicitly.** The artifact was first published from this
-   project's previous home. Publishing `index.html` from this repo *without* the
-   `url` creates a second, separate artifact rather than updating the live one.
+1. **Publish `dist/artifact.html`, not `index.html`**, after running
+   `node tools/build-artifact.mjs` — and **pass that URL explicitly**. Publishing
+   without the `url` creates a second, separate artifact rather than updating the
+   live one.
 2. **Capabilities must be restated when they change.** The page declares `db`,
    `downloads` and `sample`. Omitting `capabilities` on a redeploy carries the
    stored set forward; passing a non-empty object replaces it wholesale, so

@@ -1,3 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="An interactive graph of who played on what, and where: 373 musicians, bands, records, songs, studios, instruments, tours and labels, with filters, a query language and shortest-path search.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Patchbay">
+<meta property="og:description" content="An interactive graph of who played on what, and where.">
+</head>
+<body>
+<!-- APP:BEGIN — everything between these markers is what gets published as an
+     Artifact, where the platform supplies its own <head>. Keep the <title> and
+     the font <link>s inside the region: the HTML parser processes both using
+     the in-head rules wherever it finds them, so they work in both builds. -->
 <title>Patchbay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3019,3 +3035,6 @@ async function connectStore() {
   connectStore();
 })();
 </script>
+<!-- APP:END -->
+</body>
+</html>

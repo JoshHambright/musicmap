@@ -5,13 +5,17 @@ albums, songs, studios, gear, tours and labels, with typed relationships between
 them — filtered, queried, and searchable for the shortest route between any two
 things.
 
-Live: **https://claude.ai/code/artifact/07523ea7-c423-4cd3-80b7-6885b139f19f**
+**Live on GitHub Pages: https://joshhambright.github.io/musicmap/**
+· also published as a [Claude Artifact](https://claude.ai/code/artifact/07523ea7-c423-4cd3-80b7-6885b139f19f)
 
-The app is one self-contained `index.html`. **Open it in any browser** — no build
-step, no dependencies, no network calls except Google Fonts. Published as a
-Claude Artifact it also gets a shared store, file export, and the ability to ask
-Claude to extend the graph; opened as a local file those features stand down
-cleanly and everything else works.
+The app is one self-contained `index.html` — a complete HTML document with no
+build step, no dependencies, and no network calls except Google Fonts. **Open it
+in any browser**, clone it, or serve the repo root as a static site; they are the
+same file.
+
+Running as an Artifact it also gets a shared store, file export, and the ability
+to ask Claude to extend the graph. On Pages or as a local file those three stand
+down cleanly — the page says so — and everything else works identically.
 
 The premise is that the interesting connections in music are not the ones a
 discography shows. They are the rooms, the producers and the session players:
@@ -235,6 +239,24 @@ assets.
 
 
 ---
+
+## Deploying
+
+GitHub Pages serves the repository root, so `index.html` is the site and there is
+nothing to build. `.nojekyll` keeps Jekyll's hands off it.
+
+The Artifact build is the one exception. The Artifact platform supplies its own
+`<head>`, so it wants the page content without a document shell around it:
+
+```bash
+node tools/build-artifact.mjs     # -> dist/artifact.html
+```
+
+That lifts out the region between the `APP:BEGIN` / `APP:END` markers and refuses
+to write a file that still carries a `<html>`, `<head>`, `<body>` or doctype. The
+`<title>` and the font `<link>`s live *inside* that region on purpose: the HTML
+parser processes both using its in-head rules wherever it finds them, so one copy
+serves both builds.
 
 ## Origins
 
