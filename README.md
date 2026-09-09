@@ -180,6 +180,12 @@ deletion with a one-click revert, and an undo-all. Nothing you do is destructive
 to the corpus: the baseline is in the file, so the worst case is a stack of
 overlay rows you can throw away.
 
+**Where changes go depends on where the page is running.** As an Artifact they
+land in a store shared with everyone who can open it. On GitHub Pages or as a
+local file there is no store, so they last until you reload — the panel says so,
+and Export is how you keep them. The corpus itself always ships in the file, so
+there is nothing to lose by experimenting.
+
 **Import** takes what Export writes — `{"nodes": […], "edges": […]}` — by file or
 paste. Rows are resolved by id where one is given and by name otherwise, so an
 export from a different copy still lands on the right entities. Rows identical to

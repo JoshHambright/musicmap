@@ -2589,7 +2589,7 @@ $("addNode").onclick = async () => {
   const body = { id, type: $("nType").value, name, year: $("nYear").value ? +$("nYear").value : null, note: $("nNote").value.trim() || null };
   const saved = await writeNode(id, body);
   $("nName").value = ""; $("nYear").value = ""; $("nNote").value = "";
-  say("sayNode", saved ? "Added " + name + " — saved for everyone." : "Added " + name + " — this browser only, not stored.", saved ? "ok" : "");
+  say("sayNode", saved ? "Added " + name + " — saved for everyone." : "Added " + name + " — not stored; export before you reload.", saved ? "ok" : "");
   select(id, true);
 };
 $("addEdge").onclick = async () => {
@@ -2601,7 +2601,7 @@ $("addEdge").onclick = async () => {
   const body = { id, f: a.id, t: b.id, rel, year: $("eYear").value ? +$("eYear").value : null, note: $("eNote").value.trim() || null };
   const saved = await writeEdge(id, body);
   $("eNote").value = "";
-  say("sayEdge", a.name + " " + RELS[rel].label + " " + b.name + (saved ? " — saved." : " — this browser only."), saved ? "ok" : "");
+  say("sayEdge", a.name + " " + RELS[rel].label + " " + b.name + (saved ? " — saved." : " — not stored; export before you reload."), saved ? "ok" : "");
   select(a.id, false);
 };
 async function removeNode(id) {
@@ -2733,7 +2733,7 @@ async function importJSON(text) {
     plural(writes.length - nn, "connection", "connections") + "." +
     (matched ? " " + plural(matched, "row", "rows") + " already matched." : "") +
     (skipped ? " " + plural(skipped, "row", "rows") + " skipped." : "") +
-    (failed ? " " + failed + " could not be saved." : db ? "" : " Not stored — this browser only."),
+    (failed ? " " + failed + " could not be saved." : db ? "" : " Not stored — export before you reload."),
     failed ? "bad" : "ok");
   $("importBox").classList.remove("on");
   $("importText").value = "";
@@ -2969,7 +2969,7 @@ async function applyGrow() {
   if (landed && byId.has(landed)) select(landed, true);
   say("sayIO", "Kept " + plural(writes.length - nn, "connection", "connections") +
     (nn ? " and " + plural(nn, "new entity", "new entities") : "") + " around " + focusName + "." +
-    (failed ? " " + failed + " could not be saved." : db ? "" : " This browser only."), failed ? "bad" : "ok");
+    (failed ? " " + failed + " could not be saved." : db ? "" : " Not stored — export before you reload."), failed ? "bad" : "ok");
   paintGrow();
 }
 
@@ -2994,7 +2994,7 @@ async function connectStore() {
   sampler = await use("sample");
   if (sampler) renderInspect();          /* the Expand control only exists if it can work */
   const box = $("storeState"), lbl = $("storeLbl");
-  if (!db) { lbl.textContent = "Local view — additions live in this browser only"; return; }
+  if (!db) { lbl.textContent = "No store here — changes last until you reload. Export to keep them."; return; }
   storeLive = true; box.classList.add("live"); lbl.textContent = "Shared store connected — edits are live for everyone";
   const bind = (coll, map) => db.collection(coll).onSnapshot((snap) => {
     map.clear();

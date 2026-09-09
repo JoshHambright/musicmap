@@ -25,10 +25,11 @@ If that shows uncommitted changes or unpushed commits, you are not done.
 
 ## The project
 
-**One self-contained `index.html`.** No build step, no dependencies, no bundler,
-no framework. Open it in a browser and it runs. That constraint is the point, not
-an accident of how it started — it is what lets the same file be a local file, a
-published page, and something you can read end to end.
+**One self-contained `index.html`.** No dependencies, no bundler, no framework.
+Open it in a browser and it runs. That constraint is the point, not an accident
+of how it started — it is what lets the same file be a local file, a Pages site,
+and something you can read end to end. The only build is a script that *removes*
+a document shell for the Artifact target; nothing is ever compiled or bundled.
 
 Everything else in the repo is prose about that file.
 
